@@ -1,0 +1,244 @@
+Clean Code
+
+1.- Deuda tecnica
+Es la falta de calidad en el código, que genera una deuda que repercutirá en costo futuros, esto significa refactorizaciones en el futuro
+
+Hay cuatro cuadrantes en la deuda técnica
+
+1.- Imprudente(no hay tiempo solo copia y pega)
+
+2.- Inadvertido(¿Que son patrones de diseños?)
+
+3.- Prudente(Tenemos que entregar rápido, ya luego refactorizaremos)
+
+4.- Prudente e inadvertida(Ahora sabemos como lo deberíamos haber hecho)
+
+La deuda técnica se paga con refactorizacion y este tiene como objetivo mejorar el código sin alterar su comportamiento para que sea mas entendible y tolerante a cambios
+
+“Clean Code es aquel que se ha escrito con la intención de que otra persona (o tu mismo en el futuro) lo entienda” - Carlos Blé
+
+Nombre para las variables según el tipo de dato
+
+Arrays
+
+// malo
+fruit
+
+// regular
+fruitList
+
+// bueno
+fruits
+
+// mejor
+fruitsNames
+
+Booleanos
+Is, has, can pueden dar mucho mas sentido semántico a la variable
+
+// malos
+Open = true
+Write = true
+Fruit = true
+Active = true
+noValues = true
+notEmpty = true
+
+// Mejor
+isOpen = true
+canWrite = true
+hasFruit = true
+isActive = false
+hasValues = false
+isEmpty = false
+
+Numeros
+max, min, of para referirnos a numeros puede ser mejor 
+
+// malo
+Fruits = 3
+Cars = 10
+
+// mejor
+maxFruits = 5
+minFruits = 1
+totalFruits = 3
+totalOfCars = 5
+
+
+Funciones
+Verbo que representa la accion seguida de un sustantivo
+
+// Mal
+createUserIfNotExist()
+updateUserIfNotEmpty()
+sendEmailIfFieldsValid()
+
+// Mejor
+createUser()
+updateUser()
+sendEmail()
+
+
+— Consideraciones para las clases
+Evitar nombres genéricos
+// malos
+Manger{}
+Data{}
+Info{}
+Individual{}
+Processor{}
+SpecialMonsterView{}
+
+El nombre es lo mas importante de la clase, este es formado por un sustantivo o frases de sustantivo
+No deben de ser muy genéricos
+Usar UpperCamelCase
+
+3 preguntas para saber si es un buen nombre
+¿Que hace exactamente la clase?
+¿Como exactamente esta clase realiza cierta tarea?
+¿Hay algo especifico sobre su ubicación ?
+
+1 regla importante
+Si algo no tiene sentido podemos remover o refactorizar
+
+— Funciones, argumentos y parámetros
+
+ Sabemos que estamos desarrollando código limpio cuando cada función hace exactamente lo que su nombre indica - Ward cunningham
+ 
+2.- Principio Dry - Don’t-Repeat-Yourself
+Si quieres ser un programador productivo esfuérzate en escribir código legible - Robert C. Martin
+
+Evitar tener duplicidad en nuestro código
+Simplifica las pruebas - es mas fácil probar ciertas funciones de código que todo un componente
+Ayuda a centralizar procesos
+Aplicar el principio Dry, usualmente lleva a refactorizar
+
+
+3.- Clases y comentarios
+
+Principio de responsabilidad unica
+La función haga lo que nosotros esperamos que haga con el nombre, lo mismo es con una clase
+
+Siempre buscar la composición frente a la herencia
+
+Estructura de una clase
+	1.- Comenzar con la lista de propiedades
+		- Primero propiedades estáticas
+		- Propiedades publicas
+
+	2.- Lista de metodos
+		- Primero constructores estáticos
+		- Constructores normales
+		- Seguidamente de metodos staticos
+		- Métodos privados después
+		- Resto de métodos ordenados de mayor a menor importancia
+		- Getters and Setters al final
+
+4.- Uniformidad en el proyecto
+Se recomienda que al nombrar métodos u funciones que realizar alguna tarea en especial como crearProducto y después volvemos a tener que crear un usuario se haga con la misma sintaxis por ejemplo
+
+const createUser = () => {}
+const updateUser = () => {}
+const deleteUser = () => {}
+
+Ahora si después tuviéramos que hacer lo mismo con un producto, se recomienda que se escriban de la misma manera
+const createProduct = () => {}
+const updateProduct = () => {}
+const deleteUser = () => {}
+
+5.- STUPID
+STUPID es un acrónimo conformado por Code smells o código apestoso y esta conformado por los siguientes antipatrones
+
+	1.- Singleton: Patrón singleton
+	2.- Tight Coupling: Alto acomplamiento
+	3.- Unterstability: Código no probable (unit test) 
+	4.- Premature Optimization: optimizaciones prematuras
+	5.- Indescriptible Naming: Nombres poco descriptivos
+	6.- Duplication: Duplicidad de código, no aplicar el principio DRY
+
+	SINGLETON 
+	Pros: Garantiza una única instancia de la clase a lo largo de nuestra app
+	Contras: Vive en el contexto global
+			Puede ser modificado por cualquiera y en cualquier momento
+			No es rastrearle
+			Difícil de probar debido a su ubicación
+    ALTO ACOMPLAMIENTO
+    Lo ideal es tener un bajo acoplamiento y alta cohesion 
+    Un alto acoplamiento por lo general provoca un efecto domino cunado se hace un pequeño cambio en un modulo
+    Un modulo en particular puede ser mas dificil de reutilizar y/o probar porque se deben incluir modulos dependientes
+
+    Posibles soluciones:
+    A tiene un atributo que se refiere a B
+    A llama a los servicios de un objeto B
+    A tiene un método que hace referencia a B (a traves del tipo de retorno o parámetro )
+
+    La cohesion se refiere a lo que la clase (o modulo) puede hacer.
+
+    La baja cohesion significaría que la clase realiza una gran variedad de acciones: es amplia,
+    no se enfoca en lo que debe hacer
+
+    La alta cohesion significa que la clase se enfoca en lo que debería estar haciendo, es decir, solo métodos
+    relacionados con la intención de la clase, no hace cosas externa a ella.
+
+    Acoplamiento: se refiere a cuan relacionadas o dependientes son 2 clases o módulos entre si
+        en bajo acoplamiento: cambiar algo importante en una clase no debería afectar a la otra
+        en alto acoplamiento: dificulta el cambio y el mantenimiento de su código; dado que las clases están muy Unidas
+                                hacer un cambio podría requerir una renovación completa del sistema
+
+
+    CÓDIGO NO PROBABLE
+    difícil de testear, con alto acoplamiento, con muchas dependencias no inyectadas, con dependencias en el contexto global
+
+    OPTIMIZACIONES PREMATURAS
+    No debemos anticiparnos a los requisitos y desarrollar abstracciones innecesarias que puedan añadir complejidad accidental
+
+    NOMBRES POCO DESCRIPTIVOS
+    Nombre de variables mal nombradas, nombres genéricos, nombres de funciones mal nombradas, ser muy especifico o demasiado generico
+
+    DUPLICIDAD DE CÓDIGO
+    No aplicar el principio dry
+    existen 2 tipos de duplicidad
+
+    REAL: 
+        código idéntico y cumple la misma función
+        un cambio implicaría actualizar todo el código idéntico en varios lugares
+
+    ACCIDENTAL
+        código luce similar pero cumple funciones distintas
+        cuando hay un cambia, solo hay que modificar un solo lugar
+        este tipo de duplicidad se puede trabajar con parámetros u optimizaciones 
+
+6.- S.O.L.I.D
+
+    Los 5 principios S.O.L.I.D. de diseño de software son:
+
+    S – Single Responsibility Principle (SRP): 
+        Una clase no debe de tener mas de una responsabilidad, aclarar que:
+            "una unica responsabilidad" no es igual a "hacer una unica cosa"
+
+
+    O – Open/Closed Principle (OCP)
+        Establece que las entidades de software (clases, módulos, métodos, etc), deben estar abiertos para la extension, pero cerradas para la modificación
+        Significa que puedas hacer modificaciones a algún modulo sin afectar las partes donde es implementado ese modulo o clase
+
+    L – Liskov Substitution Principle (LSP)
+        Hacer modificaciones sin alterar las propiedades del sistema (abstract class)
+        Las funciones que utilicen punteros o referencias a clases base deben ser capaces de usar objetos de clases derivadas sin saberlo
+        Polimorfismo
+    I – Interface Segregation Principle (ISP)
+        Este principio establece que los clases no deberían de verse forzados a depender de interfaces que no usan
+        Separar interfaces para evitar a las clases que utilicen métodos que no necesitan
+
+    D – Dependency Inversion Principle (DIP)
+        Módulos de alto nivel no deben de depender de módulos de bajo nivel
+        Ambos deberían depender de abstracciones
+        Abstracciones no deben de depender de detalles
+        Los detalles deberían de depender de abstracciones
+
+        Inyección de dependencias
+        Dependencia en programación significa que un modulo o componente requiere de otro para poder realizar su trabajo
+
+        En algún momento nuestro programa o aplicación llegará a estar formado por muchos módulos. Cuando esto pase, es cuando debemos
+        usar inyección de dependencias
+
